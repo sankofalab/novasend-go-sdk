@@ -149,7 +149,7 @@ if err != nil { log.Fatal(err) }
 http.HandleFunc("/webhook", func(w http.ResponseWriter, r *http.Request) {
     body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 1<<20))
     if err != nil { http.Error(w, "Invalid request", http.StatusBadRequest); return }
-    sig := r.Header.Get("X-Signature-Value")
+    sig := r.Header.Get("X-Webhook-Signature")
 
     event, err := wh.VerifySignature(body, sig)
     if err != nil {
